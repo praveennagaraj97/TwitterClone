@@ -60,6 +60,16 @@ class Utilities {
         return textField
     }
     
+    func attributedButton(_ firstPart : String,_ secondPart:String) -> UIButton{
+        let btn = UIButton(type: .system)
+        let attributedTitle = NSMutableAttributedString(string: firstPart, attributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 16),NSAttributedString.Key.foregroundColor:UIColor.white])
+        
+        attributedTitle.append(NSAttributedString(string: secondPart, attributes: [NSAttributedString.Key.font:UIFont.boldSystemFont(ofSize: 16),NSAttributedString.Key.foregroundColor:UIColor.white]))
+        
+        btn.setAttributedTitle(attributedTitle, for: .normal)
+        return btn
+    }
+    
     
     func imageResizer(image:UIImage,size:CGSize) -> UIImage  {
         let renderer = UIGraphicsImageRenderer(size: size)

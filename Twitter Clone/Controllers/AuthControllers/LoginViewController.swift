@@ -30,13 +30,22 @@ class LoginViewController: UIViewController {
     private let loginButton: UIButton = {
         let btn = UIButton(type: .system)
         btn.setTitle("Login", for: .normal)
-        btn.setTitleColor(UIColor.red, for: .normal)
+        btn.setTitleColor(UIColor(red: 50/255, green: 190/255, blue: 237/255, alpha: 1), for: .normal)
+        btn.backgroundColor = .white
+        btn.heightAnchor.constraint(equalToConstant: CGFloat(50)).isActive = true
+        btn.addTarget(self, action: #selector(loginClicked), for: .touchUpInside)
+        btn.layer.cornerRadius = 10
+        btn.titleLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         return btn
-        
-        
     }()
     
     
+    
+    private let redirectToRegister : UIButton = {
+        let btn = Utilities().attributedButton("Don't have an account", " Sign Up")
+        btn.addTarget(self, action: #selector(redirectToRegisterClicked), for: .touchUpInside)
+        return btn
+    }()
     
     
     
@@ -48,6 +57,15 @@ class LoginViewController: UIViewController {
     }
     
     // MARK: - Selectors
+    @objc func loginClicked(){
+        print("login triggered")
+        print(emailTextField.text ?? "",passwordTextField.text ?? "")
+    }
+    
+    @objc func redirectToRegisterClicked(){
+        print("redirect triggered")
+        print(emailTextField.text ?? "",passwordTextField.text ?? "")
+    }
     
     
     // MARK: - Helpers
@@ -55,7 +73,7 @@ class LoginViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         configLogoUI()
         configInputContainerStackUI()
-        
+        redirectToRegisterConfigUI()
     }
     
     
@@ -65,15 +83,11 @@ class LoginViewController: UIViewController {
         logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30).isActive = true
         logoImageView.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor, constant: 0).isActive = true
         
-        view.addSubview(loginButton)
-        loginButton.translatesAutoresizingMaskIntoConstraints = false
-        loginButton.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
-        loginButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0).isActive = true
     
     }
     
     private func configInputContainerStackUI(){
-        let stackView = UIStackView(arrangedSubviews: [emailContainerView,passwordContainerView])
+        let stackView = UIStackView(arrangedSubviews: [emailContainerView,passwordContainerView,loginButton])
         
         view.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -82,6 +96,14 @@ class LoginViewController: UIViewController {
         stackView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 20).isActive = true
         stackView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 10).isActive = true
         stackView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -10).isActive = true
+    }
+    
+    private func redirectToRegisterConfigUI(){
+        view.addSubview(redirectToRegister)
+        redirectToRegister.translatesAutoresizingMaskIntoConstraints = false
+        redirectToRegister.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -10).isActive = true
+        redirectToRegister.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0).isActive = true
+       
     }
     
     
